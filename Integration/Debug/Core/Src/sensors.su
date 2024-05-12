@@ -1,0 +1,4 @@
+../Core/Src/sensors.c:6:6:SystemClock_Config	72	static
+../Core/Src/sensors.c:45:13:MX_GPIO_Init	48	static
+../Core/Src/sensors.c:148:6:Error_Handler	4	static,ignoring_inline_asm
+../Core/Src/sensors.c:159:6:HAL_setup	8	static

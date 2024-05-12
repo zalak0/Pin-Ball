@@ -1,0 +1,12 @@
+../Drivers/CMSIS/Include/core_cm4.h:1688:22:__NVIC_EnableIRQ	2
+../Drivers/CMSIS/Include/core_cm4.h:1777:22:__NVIC_ClearPendingIRQ	2
+../Drivers/CMSIS/Include/core_cm4.h:1816:22:__NVIC_SetPriority	2
+../Core/Src/timers.c:7:6:enable_clocks	1
+../Core/Src/timers.c:15:6:initialise_board	1
+../Core/Src/timers.c:22:6:enable_interrupts	1
+../Core/Src/timers.c:50:6:start_timer	1
+../Core/Src/timers.c:61:6:TIM2_IRQHandler	2
+../Core/Src/timers.c:71:6:TIM3_IRQHandler	2
+../Core/Src/timers.c:81:5:get_game_time	1
+../Core/Src/timers.c:85:6:game_timer	1
+../Core/Src/timers.c:100:6:multi_timer	1
