@@ -21,7 +21,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "serial.h"
+
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -65,12 +65,6 @@ static void MX_TIM2_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-void finished_transmission(uint8_t *string_to_send, SerialPort *serial_port) {
-	for (volatile uint32_t i = 0; i < 0x8ffff; i++) {
-		// waste time !
-	}
-	SerialOutputString(string_to_send, &USART1_PORT);
-}
 /* USER CODE END 0 */
 
 /**
@@ -107,9 +101,8 @@ int main(void)
   MX_TIM2_Init();
   /* USER CODE BEGIN 2 */
 
-  uint8_t *string_to_send = "This is a string !\r\n";
-
-  SerialInitialise(BAUD_115200, &USART1_PORT, &finished_transmission);
+  HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_1);
+  HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_2);
 
   /* USER CODE END 2 */
 
@@ -119,14 +112,20 @@ int main(void)
   /* Infinite loop */
   while (1)
   {
-	 SerialOutputString(string_to_send, &USART1_PORT);
+	  if (HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_13) == 0) {
+		  TIM2->CCR1 = 1100;
+		  TIM2->CCR2 = 1100;
+	  }
+	  else {
+		  TIM2->CCR1 = 1400;
+		  TIM2->CCR2 = 1900;
+	  }
+        /* USER CODE END WHILE */
 
-    /* USER CODE END WHILE */
-
-    /* USER CODE BEGIN 3 */
-  }
-  /* USER CODE END 3 */
-}
+        /* USER CODE BEGIN 3 */
+      }
+      /* USER CODE END 3 */
+    }
 
 /**
   * @brief System Clock Configuration
@@ -449,3 +448,4 @@ void assert_failed(uint8_t *file, uint32_t line)
   /* USER CODE END 6 */
 }
 #endif /* USE_FULL_ASSERT */
+
