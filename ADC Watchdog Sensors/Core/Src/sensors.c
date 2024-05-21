@@ -10,7 +10,7 @@ __IO uint16_t uhADCxConvertedValue = 0;
 
 
 //Debugging
-uint8_t string_to_send[64] = "This is a string !\r\n";
+uint8_t string_to_send[4] = "0000";
 
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
@@ -102,7 +102,7 @@ static void MX_ADC2_Init(void)
   */
   AnalogWDGConfig.WatchdogNumber = ADC_ANALOGWATCHDOG_1;
   AnalogWDGConfig.WatchdogMode = ADC_ANALOGWATCHDOG_SINGLE_REG;
-  AnalogWDGConfig.HighThreshold = 2600;
+  AnalogWDGConfig.HighThreshold = 2700;
   AnalogWDGConfig.LowThreshold = 0;
   AnalogWDGConfig.Channel = ADC_CHANNEL_1;
   AnalogWDGConfig.ITMode = ENABLE;
@@ -116,7 +116,7 @@ static void MX_ADC2_Init(void)
   sConfig.Channel = ADC_CHANNEL_1;
   sConfig.Rank = ADC_REGULAR_RANK_1;
   sConfig.SingleDiff = ADC_SINGLE_ENDED;
-  sConfig.SamplingTime = ADC_SAMPLETIME_2CYCLES_5;
+  sConfig.SamplingTime = ADC_SAMPLETIME_601CYCLES_5;
   sConfig.OffsetNumber = ADC_OFFSET_NONE;
   sConfig.Offset = 0;
   if (HAL_ADC_ConfigChannel(&hadc2, &sConfig) != HAL_OK)
@@ -202,7 +202,7 @@ void HAL_ADC_LevelOutOfWindowCallback(ADC_HandleTypeDef* hadc)
 {
   uhADCxConvertedValue = HAL_ADC_GetValue(&hadc2);
   ubAnalogWatchdogStatus = SET;
-  sprintf(string_to_send, "%hu\r\n", uhADCxConvertedValue);
+  sprintf(string_to_send, "%hu", uhADCxConvertedValue);
   SerialOutputString(string_to_send, &USART1_PORT);
 }
 /* USER CODE END 4 */
