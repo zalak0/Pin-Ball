@@ -33,10 +33,14 @@ void set_period(int duration);
 //Retrieves current period (duration) for TIM2.
 int get_period();
 
-//Runs one time callback function on TIM2. (Inputs: pointer to function, and duration (number of ticks at prescaler value)).
+//Runs one time callback function on TIM3. (Inputs: pointer to function, and duration (number of ticks at prescaler value)).
 void multi_timer(void (*func_ptr)(), int duration);
 
-//Runs game duration timer on TIM1. (Inputs: game duration in seconds)
-void game_timer(int duration);
+//Runs game duration timer on TIM2. (Inputs: pointer to function, game duration in seconds)
+void game_timer(void (*func_ptr)(), int duration);
+
+//Runs scoring timer on TIM4 (Inputs: pointer to function, and delay between score updates)
+void score_timer(void (*func_ptr)(), int duration);
+
 
 #endif
