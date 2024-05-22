@@ -117,8 +117,10 @@ int main(void)
         if (memcmp(sNum, stored_uid, 5) == 0) {
           uid_match = 'Y';
           HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8, GPIO_PIN_SET);
+
         } else {
           uid_match = 'N';
+          HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8, GPIO_PIN_RESET);
         }
 
         // Update the last detected time
