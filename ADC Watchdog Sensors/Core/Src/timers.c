@@ -9,6 +9,7 @@ void enable_clocks(){
 	RCC->AHBENR |= RCC_AHBENR_GPIOAEN | RCC_AHBENR_GPIOCEN | RCC_AHBENR_GPIOEEN;
 	RCC->APB1ENR |= RCC_APB1ENR_TIM2EN;
 	RCC->APB1ENR |= RCC_APB1ENR_TIM3EN;
+	RCC->APB1ENR |= RCC_APB1ENR_TIM4EN;
 
 }
 
@@ -61,14 +62,15 @@ void enable_interrupts(){
 
 }
 
-/*
+
 void start_timer(){
 
-	TIM2->EGR = TIM_EGR_UG;
-	TIM2->SR &= ~TIM_SR_UIF;
+	TIM3->EGR = TIM_EGR_UG;
+	TIM3->SR &= ~TIM_SR_UIF;
+	TIM3->CNT = 0x00;
 
 }
-*/
+
 void (*on_TIM2_reset)() = 0x00;
 
 void (*on_TIM3_reset)() = 0x00;
@@ -91,9 +93,18 @@ void TIM3_IRQHandler(void){
 	if (on_TIM3_reset != 0x00){
 		on_TIM3_reset();
 		TIM3->CNT = 0x00;
-		TIM3->CR1 = 0;
 	}
 }
+
+void TIM4_IRQHandler(void){
+	TIM4->SR &= ~TIM_SR_UIF;
+
+    if(on_TIM4_reset != 0x00){
+    	on_TIM4_reset();
+    	TIM4->CNT = 0x00;
+    }
+}
+
 
 int get_game_time(){
 	return (TIM2->CNT)/1000;

@@ -49,9 +49,7 @@
 //Point Values & Multiplier Durations
 uint16_t mult_2_duration = 5000;
 uint16_t point_val_1 = 100;
-uint16_t point_val_2 = 200;
-uint16_t point_val_3 = 500;
-
+uint8_t multi_trigger = RESET;
 //Game Variables
 uint8_t end_game = 0;
 uint16_t score = 0;
@@ -61,8 +59,7 @@ uint16_t multiplier = 1;
 
 
 //Sensor Flags
-uint8_t prevWDS = 0;
-
+uint8_t can_score = 1;
 
 /*
 void SystemClock_Config(void);
@@ -75,11 +72,18 @@ void game_over(void){
 }
 
 void valid_input(void){
-	prevWDS = 1;
+	can_score = 1;
 }
 
 void reset_multiplier(void){
 	multiplier = 1;
+}
+
+void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
+{
+	if(GPIO_Pin == GPIO_PIN_1){
+		multi_trigger = SET;
+	}
 }
 
 
@@ -96,7 +100,6 @@ int main(void) {
 
 	START_ADC();
 
-
 	enable_clocks();
 	enable_interrupts();
 	//Debugging
@@ -104,44 +107,36 @@ int main(void) {
 
 	game_state = 1;
 	while (game_state == 0){
-		if(HAL_GPIO_ReadPin(GPIO_PIN_1) == SET){
-		  game_state = 1;
-		}
+		//if(HAL_GPIO_ReadPin(GPIO_PIN_1) == SET){
+		  //game_state = 1;
+		//}
 	}
 
 	game_timer(&game_over, 60000); //Duration in milliseconds
 
 	while (game_state == 1){
 
-		//Multiplier Logic
-		/*
-		 * NOTE: READ PIN NOT YET SET (TBD)
-		 */
-		if (HAL_GPIO_ReadPin(GPIO_PIN_2) == SET){
+		if (multi_trigger == SET){
 
 			//Set current multiplier to 5
 			multiplier = 5;
 
 			//Set timer to reset multiplier to 1
 			multi_timer(&reset_multiplier, 5000);
+			multi_trigger = RESET;
 		}
 
 
 
 
 		//Point Scoring Logic
-		/*
-		 * NOTE: OFTEN DOUBLE SCORING (NEEDS MORE WORK)
-		 */
 		if (ubAnalogWatchdogStatus == SET){
 
-			if(prevWDS == 0){
-				score_timer(&valid_input, 500);
-			}
-			else if(prevWDS == 1){
+			if(can_score == 1){
+				score_timer(&valid_input, 200);
+				start_timer();
+				can_score = 0;
 				score += point_val_1 * multiplier;
-				prevWDS = 0;
-
 			}
 		}
 		//prevWDS = 0;

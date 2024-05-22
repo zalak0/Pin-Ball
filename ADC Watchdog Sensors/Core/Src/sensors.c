@@ -10,7 +10,7 @@ __IO uint16_t uhADCxConvertedValue = 0;
 
 
 //Debugging
-uint8_t string_to_send[4] = "0000";
+uint8_t string_to_send[64] = "0000";
 
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
@@ -102,7 +102,7 @@ static void MX_ADC2_Init(void)
   */
   AnalogWDGConfig.WatchdogNumber = ADC_ANALOGWATCHDOG_1;
   AnalogWDGConfig.WatchdogMode = ADC_ANALOGWATCHDOG_SINGLE_REG;
-  AnalogWDGConfig.HighThreshold = 2700;
+  AnalogWDGConfig.HighThreshold = 2900;
   AnalogWDGConfig.LowThreshold = 0;
   AnalogWDGConfig.Channel = ADC_CHANNEL_1;
   AnalogWDGConfig.ITMode = ENABLE;
@@ -179,6 +179,19 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Alternate = GPIO_AF5_SPI1;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
+  /*Configure GPIO pin : PA1 */
+  GPIO_InitStruct.Pin = GPIO_PIN_1;
+  GPIO_InitStruct.Mode = GPIO_MODE_IT_FALLING;
+  GPIO_InitStruct.Pull = GPIO_PULLDOWN;
+  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+
+  /*Configure GPIO pin : PA2 */
+  GPIO_InitStruct.Pin = GPIO_PIN_2;
+  GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+
+
   /*Configure GPIO pins : DM_Pin DP_Pin */
   GPIO_InitStruct.Pin = DM_Pin|DP_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
@@ -195,6 +208,9 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Alternate = GPIO_AF4_I2C1;
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
+  HAL_NVIC_SetPriority(EXTI1_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(EXTI1_IRQn);
+
 }
 
 /* USER CODE BEGIN 4 */
@@ -202,7 +218,7 @@ void HAL_ADC_LevelOutOfWindowCallback(ADC_HandleTypeDef* hadc)
 {
   uhADCxConvertedValue = HAL_ADC_GetValue(&hadc2);
   ubAnalogWatchdogStatus = SET;
-  sprintf(string_to_send, "%hu", uhADCxConvertedValue);
+  sprintf(string_to_send, "%hu\r\n", uhADCxConvertedValue);
   SerialOutputString(string_to_send, &USART1_PORT);
 }
 /* USER CODE END 4 */
