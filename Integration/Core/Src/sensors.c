@@ -9,7 +9,7 @@ __IO uint16_t uhADCxConvertedValue = 0;
 
 
 //Debugging
-uint8_t string_to_send[64] = "0000";
+uint8_t string_to_send[8] = "00000000";
 
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
@@ -101,7 +101,9 @@ static void MX_ADC2_Init(void)
   */
   AnalogWDGConfig.WatchdogNumber = ADC_ANALOGWATCHDOG_1;
   AnalogWDGConfig.WatchdogMode = ADC_ANALOGWATCHDOG_SINGLE_REG;
-  AnalogWDGConfig.HighThreshold = 3000;
+
+  //EDIT THE VALUE BELOW TO CHANGE SENSITIVITY
+  AnalogWDGConfig.HighThreshold = 3350;
   AnalogWDGConfig.LowThreshold = 0;
   AnalogWDGConfig.Channel = ADC_CHANNEL_1;
   AnalogWDGConfig.ITMode = ENABLE;
@@ -187,7 +189,7 @@ static void MX_GPIO_Init(void)
   /*Configure GPIO pin : PA2 */
   GPIO_InitStruct.Pin = GPIO_PIN_2;
   GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Pull = GPIO_PULLDOWN;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
   /*Configure GPIO pin : PA5, PA6, PA7, PA8 */
@@ -226,6 +228,9 @@ void HAL_ADC_LevelOutOfWindowCallback(ADC_HandleTypeDef* hadc)
 {
   uhADCxConvertedValue = HAL_ADC_GetValue(&hadc2);
   ubAnalogWatchdogStatus = SET;
+
+  /* USE FOR SETTING LDR VALUE */
+
   sprintf(string_to_send, "%hu\r\n", uhADCxConvertedValue);
   SerialOutputString(string_to_send, &USART1_PORT);
 }

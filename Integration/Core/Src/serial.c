@@ -138,29 +138,6 @@ void SerialOutputString(uint8_t *pt, SerialPort *serial_port) {
 		serial_port->completion_function(counter);
 }
 
-
-// returns 1 if valid char, 0 if timeout
-uint8_t SerialReceiveChar(SerialPort *serial_port, uint8_t *received_char)
-{
-	uint16_t timeout = 0xffff;
-	while (1) {
-		timeout--;
-		if (timeout == 0)
-			return 0;
-
-		if (*(serial_port->StatusRegister) & USART_ISR_ORE || *(serial_port->StatusRegister) & USART_ISR_FE) {
-			*(serial_port->FlagClearRegister) |= USART_ICR_ORECF | USART_ICR_FECF;
-		}
-
-		if (*(serial_port->StatusRegister) & USART_ISR_RXNE) { // Wait for RXNE flag to be set
-			break;
-		}
-	}
-	*received_char = *(serial_port->DataInputRegister);
-	return 1;
-}
-
-
 void SerialOutputBuffer(uint8_t *buffer, uint16_t buffer_length, SerialPort *serial_port) {
 	uint32_t counter = 0;
 
