@@ -57,11 +57,14 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
+#define DRDY_Pin GPIO_PIN_2
+#define DRDY_GPIO_Port GPIOE
 #define CS_I2C_SPI_Pin GPIO_PIN_3
 #define CS_I2C_SPI_GPIO_Port GPIOE
+#define MEMS_INT3_Pin GPIO_PIN_4
+#define MEMS_INT3_GPIO_Port GPIOE
 #define MEMS_INT4_Pin GPIO_PIN_5
 #define MEMS_INT4_GPIO_Port GPIOE
-#define MEMS_INT4_EXTI_IRQn EXTI9_5_IRQn
 #define OSC32_IN_Pin GPIO_PIN_14
 #define OSC32_IN_GPIO_Port GPIOC
 #define OSC32_OUT_Pin GPIO_PIN_15
@@ -72,18 +75,6 @@ void Error_Handler(void);
 #define OSC_OUT_GPIO_Port GPIOF
 #define B1_Pin GPIO_PIN_0
 #define B1_GPIO_Port GPIOA
-#define sensor1_Pin GPIO_PIN_1
-#define sensor1_GPIO_Port GPIOA
-#define sensor1_EXTI_IRQn EXTI1_IRQn
-#define sensor2_Pin GPIO_PIN_2
-#define sensor2_GPIO_Port GPIOA
-#define sensor2_EXTI_IRQn EXTI2_TSC_IRQn
-#define sensor3_Pin GPIO_PIN_3
-#define sensor3_GPIO_Port GPIOA
-#define sensor3_EXTI_IRQn EXTI3_IRQn
-#define sensor4_Pin GPIO_PIN_4
-#define sensor4_GPIO_Port GPIOA
-#define sensor4_EXTI_IRQn EXTI4_IRQn
 #define SPI1_SCK_Pin GPIO_PIN_5
 #define SPI1_SCK_GPIO_Port GPIOA
 #define SPI1_MISO_Pin GPIO_PIN_6
@@ -106,15 +97,6 @@ void Error_Handler(void);
 #define LD8_GPIO_Port GPIOE
 #define LD6_Pin GPIO_PIN_15
 #define LD6_GPIO_Port GPIOE
-#define sensor8_Pin GPIO_PIN_8
-#define sensor8_GPIO_Port GPIOA
-#define sensor8_EXTI_IRQn EXTI9_5_IRQn
-#define sensor9_Pin GPIO_PIN_9
-#define sensor9_GPIO_Port GPIOA
-#define sensor9_EXTI_IRQn EXTI9_5_IRQn
-#define sensor10_Pin GPIO_PIN_10
-#define sensor10_GPIO_Port GPIOA
-#define sensor10_EXTI_IRQn EXTI15_10_IRQn
 #define DM_Pin GPIO_PIN_11
 #define DM_GPIO_Port GPIOA
 #define DP_Pin GPIO_PIN_12
@@ -131,6 +113,8 @@ void Error_Handler(void);
 #define I2C1_SDA_GPIO_Port GPIOB
 #define MEMS_INT1_Pin GPIO_PIN_0
 #define MEMS_INT1_GPIO_Port GPIOE
+#define MEMS_INT2_Pin GPIO_PIN_1
+#define MEMS_INT2_GPIO_Port GPIOE
 
 /* USER CODE BEGIN Private defines */
 

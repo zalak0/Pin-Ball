@@ -34,34 +34,34 @@ $(wildcard ../makefile.init) \
 $(wildcard ../makefile.targets) \
 
 
-BUILD_ARTIFACT_NAME := MTRX2700_Pinball_Integration
+BUILD_ARTIFACT_NAME := Watchdog2
 BUILD_ARTIFACT_EXTENSION := elf
 BUILD_ARTIFACT_PREFIX :=
 BUILD_ARTIFACT := $(BUILD_ARTIFACT_PREFIX)$(BUILD_ARTIFACT_NAME)$(if $(BUILD_ARTIFACT_EXTENSION),.$(BUILD_ARTIFACT_EXTENSION),)
 
 # Add inputs and outputs from these tool invocations to the build variables 
 EXECUTABLES += \
-MTRX2700_Pinball_Integration.elf \
+Watchdog2.elf \
 
 MAP_FILES += \
-MTRX2700_Pinball_Integration.map \
+Watchdog2.map \
 
 SIZE_OUTPUT += \
 default.size.stdout \
 
 OBJDUMP_LIST += \
-MTRX2700_Pinball_Integration.list \
+Watchdog2.list \
 
 
 # All Target
 all: main-build
 
 # Main-build Target
-main-build: MTRX2700_Pinball_Integration.elf secondary-outputs
+main-build: Watchdog2.elf secondary-outputs
 
 # Tool invocations
-MTRX2700_Pinball_Integration.elf MTRX2700_Pinball_Integration.map: $(OBJS) $(USER_OBJS) C:\Users\Mike\STM32CubeIDE\workspace_1.14.1\MTRX2700_Pinball_Integration\STM32F303VCTX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "MTRX2700_Pinball_Integration.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"C:\Users\Mike\STM32CubeIDE\workspace_1.14.1\MTRX2700_Pinball_Integration\STM32F303VCTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="MTRX2700_Pinball_Integration.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Watchdog2.elf Watchdog2.map: $(OBJS) $(USER_OBJS) C:\Users\Mike\STM32CubeIDE\workspace_1.14.1\Watchdog2\STM32F303VCTX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-gcc -o "Watchdog2.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"C:\Users\Mike\STM32CubeIDE\workspace_1.14.1\Watchdog2\STM32F303VCTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Watchdog2.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 
@@ -70,14 +70,14 @@ default.size.stdout: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
 	@echo 'Finished building: $@'
 	@echo ' '
 
-MTRX2700_Pinball_Integration.list: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-objdump -h -S $(EXECUTABLES) > "MTRX2700_Pinball_Integration.list"
+Watchdog2.list: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-objdump -h -S $(EXECUTABLES) > "Watchdog2.list"
 	@echo 'Finished building: $@'
 	@echo ' '
 
 # Other Targets
 clean:
-	-$(RM) MTRX2700_Pinball_Integration.elf MTRX2700_Pinball_Integration.list MTRX2700_Pinball_Integration.map default.size.stdout
+	-$(RM) Watchdog2.elf Watchdog2.list Watchdog2.map default.size.stdout
 	-@echo ' '
 
 secondary-outputs: $(SIZE_OUTPUT) $(OBJDUMP_LIST)

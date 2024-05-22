@@ -1,4 +1,7 @@
-../Core/Src/sensors.c:6:6:SystemClock_Config	3
-../Core/Src/sensors.c:45:13:MX_GPIO_Init	1
-../Core/Src/sensors.c:148:6:Error_Handler	1
-../Core/Src/sensors.c:159:6:HAL_setup	1
+../Core/Src/sensors.c:20:6:START_ADC	2
+../Core/Src/sensors.c:28:6:SystemClock_Config	4
+../Core/Src/sensors.c:74:13:MX_ADC2_Init	4
+../Core/Src/sensors.c:133:13:MX_GPIO_Init	1
+../Core/Src/sensors.c:220:6:HAL_ADC_LevelOutOfWindowCallback	1
+../Core/Src/sensors.c:233:6:Error_Handler	1
+../Core/Src/sensors.c:244:6:MX_SETUP	1
